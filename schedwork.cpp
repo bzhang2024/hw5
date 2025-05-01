@@ -68,16 +68,23 @@ bool assignShifts( const AvailabilityMatrix& avail, const size_t dailyNeed, cons
         shiftCount[w]++;
 
         //move to next day or slot ig
+        bool success;
+
         if (workerSlot+1 == dailyNeed){
-          if (assignShifts(avail, dailyNeed, maxShifts, sched, shiftCount, dayIndex+1, 0)){
-            return true;
-          }
+          success = assignShifts(avail, dailyNeed, maxShifts, sched, shiftCount, dayIndex+1, 0);
+        }
+        else {
+          success = assignShifts(avail, dailyNeed, maxShifts, sched, shiftCount, dayIndex, workerSlot + 1);
         }
 
+        if (success) return true;
+        
+        //backtrack
+        sched[dayIndex][workerSlot] = INVALID_ID;
+        shiftCount[w]--;
+
       }
-      //backtrack
-      sched[dayIndex][workerSlot] = INVALID_ID;
-      shiftCount[w]--;
+      
       
     }
 

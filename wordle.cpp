@@ -60,15 +60,17 @@ void generateWords(string partialWord, string floatingLetters, const set<string>
       }
       else {
         int openSpots = 0;
-        for (int i = position+1; i < partialWord.size(); i++){
+        for (int i = position + 1; i < partialWord.size(); i++){
           if (partialWord[i] == '-'){
             openSpots++;
           }
+        }
+        //only preceed if we have enough open spots
           if (openSpots >= floatingLetters.size()){
-            generateWords(partialWord, floatingLetters, dictionary, validWords, position+1); //RECURSE
+            generateWords(partialWord, floatingLetters, dictionary, validWords, position + 1); //RECURSE
 
           }
-        }
+        
       }
     }
   }
